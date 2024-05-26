@@ -1,0 +1,40 @@
+﻿@page
+@model WebApplication2.Pages.UploadModel
+@{
+    ViewData["Title"] = "Upload page";
+}
+@section scripts {
+    <script>
+        document.forms[0].onsubmit = () => {
+            let formData = new FormData(document.forms[0]);
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (this.readyState === 4 && this.status === 200) {
+                    document.getElementById('grid').innerHTML = 'Posted using XMLHttpRequest';
+                }
+            };
+            xhr.open('post', '', true);
+            xhr.send(formData);
+            return false;
+        };
+    </script>
+}
+<div class="text-center">
+    <h1 class="display-4">Upload file</h1>
+    <form method="post" class="col-sm-6">
+        <div class="form-group row">
+            <label asp-for="UploadedFile" class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-7">
+                <input asp-for="UploadedFile" class="form-control">
+            </div>
+        </div>
+        <div class="form-group row">
+
+            <div class="col-sm-7 offset-sm-3">
+                <button class="btn btn-primary" id="submit">Submit</button>
+            </div>
+        </div>
+        <div id="grid"></div>
+    </form>
+</div>
+
